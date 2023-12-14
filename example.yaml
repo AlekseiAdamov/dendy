@@ -1,0 +1,8 @@
+hello:
+  path: /
+  method: GET
+  callbackName: Hello
+auth:
+  path: /auth
+  method: POST
+  callbackName: Auth
