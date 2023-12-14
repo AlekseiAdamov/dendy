@@ -17,7 +17,7 @@
       callbackName: Auth
     ```
 
-2. Emplement endpoints callback functions in the `callbacks` package and put them in the `Callbacks` map.
+2. Implement endpoints callback functions in the `callbacks` package and put them in the `Callbacks` map.
    Unfortunately, Go doesn't allow to call package functions by their names without binding them somehow &mdash; be it a map or a type method. That's the reason for the requirement.
 
     ```go
