@@ -1,8 +1,8 @@
-package callbacks
+package handlers
 
 import "net/http"
 
-var Callbacks = map[string]http.HandlerFunc{
+var Handlers = map[string]http.HandlerFunc{
 	"Hello": Hello,
 	"Auth":  Auth,
 }

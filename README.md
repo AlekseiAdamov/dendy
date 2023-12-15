@@ -10,22 +10,22 @@
     hello:
       path: /
       type: GET
-      callbackName: Hello
+      handlerName: Hello
     auth:
       path: /auth
       type: POST
-      callbackName: Auth
+      handlerName: Auth
     ```
 
-2. Implement endpoints callback functions in the `callbacks` package and put them in the `Callbacks` map.
+2. Implement endpoints handler functions in the `handlers` package and put them in the `Handlers` map.
    Unfortunately, Go doesn't allow to call package functions by their names without binding them somehow &mdash; be it a map or a type method. That's the reason for the requirement.
 
     ```go
-    package callbacks
+    package handlers
 
     import "net/http"
 
-    var Callbacks = map[string]http.HandlerFunc{
+    var Handlers = map[string]http.HandlerFunc{
         "Hello": Hello,
         "Auth":  Auth,
     }

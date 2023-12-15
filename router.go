@@ -26,7 +26,7 @@ func (router Router) CreateEndpoints(endpoints endpoints.Endpoints) {
 	caser := cases.Title(language.English)
 
 	for _, endpoint := range endpoints {
-		params := []reflect.Value{value(endpoint.Path), value(endpoint.Callback)}
+		params := []reflect.Value{value(endpoint.Path), value(endpoint.Handler)}
 		method := caser.String(strings.ToLower(endpoint.Method))
 		routerMethod := value(router).MethodByName(method)
 		routerMethod.Call(params)

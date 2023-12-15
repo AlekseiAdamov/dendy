@@ -5,22 +5,22 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/alekseiadamov/dendy/callbacks"
+	"github.com/alekseiadamov/dendy/handlers"
 	"gopkg.in/yaml.v3"
 )
 
 type Endpoint struct {
-	Path         string `yaml:"path"`
-	Method       string `yaml:"method"`
-	CallbackName string `yaml:"callbackName"`
-	Callback     http.HandlerFunc
+	Path        string `yaml:"path"`
+	Method      string `yaml:"method"`
+	HandlerName string `yaml:"handlerName"`
+	Handler     http.HandlerFunc
 }
 
 type Endpoints map[string]*Endpoint
 
-func (endpoints Endpoints) setCallbacks() {
+func (endpoints Endpoints) setHandlers() {
 	for _, endpoint := range endpoints {
-		endpoint.Callback = callbacks.Callbacks[endpoint.CallbackName]
+		endpoint.Handler = handlers.Handlers[endpoint.HandlerName]
 	}
 }
 
@@ -32,7 +32,7 @@ func Read(configPath string) Endpoints {
 	}
 
 	endpoints := unmarshal(endpointConfig)
-	endpoints.setCallbacks()
+	endpoints.setHandlers()
 	return endpoints
 }
 

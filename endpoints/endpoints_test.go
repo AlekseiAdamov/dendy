@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/alekseiadamov/dendy/callbacks"
+	"github.com/alekseiadamov/dendy/handlers"
 )
 
 func Test_unmarshal(t *testing.T) {
@@ -23,13 +23,13 @@ func Test_unmarshal(t *testing.T) {
 			[]byte(`hello:
   path: /
   method: GET
-  callbackName: Hello`),
+  handlerName: Hello`),
 			Endpoints{
 				"hello": {
-					Path:         "/",
-					Method:       "GET",
-					CallbackName: "Hello",
-					Callback:     nil,
+					Path:        "/",
+					Method:      "GET",
+					HandlerName: "Hello",
+					Handler:     nil,
 				},
 			},
 		},
@@ -38,23 +38,23 @@ func Test_unmarshal(t *testing.T) {
 			[]byte(`hello:
   path: /
   method: GET
-  callbackName: Hello
+  handlerName: Hello
 auth:
   path: /auth
   method: POST
-  callbackName: Auth`),
+  handlerName: Auth`),
 			Endpoints{
 				"hello": {
-					Path:         "/",
-					Method:       "GET",
-					CallbackName: "Hello",
-					Callback:     nil,
+					Path:        "/",
+					Method:      "GET",
+					HandlerName: "Hello",
+					Handler:     nil,
 				},
 				"auth": {
-					Path:         "/auth",
-					Method:       "POST",
-					CallbackName: "Auth",
-					Callback:     nil,
+					Path:        "/auth",
+					Method:      "POST",
+					HandlerName: "Auth",
+					Handler:     nil,
 				},
 			},
 		},
@@ -68,7 +68,7 @@ auth:
 	}
 }
 
-func TestEndpoint_setCallback(t *testing.T) {
+func TestEndpoint_setHandler(t *testing.T) {
 	tests := []struct {
 		name     string
 		endpoint *Endpoint
@@ -77,24 +77,24 @@ func TestEndpoint_setCallback(t *testing.T) {
 		// It's not possible to check func values for equality.
 		// See reflect.DeepEqual documentation.
 		{
-			name: "CallbackDoesntExist",
+			name: "HandlerDoesntExist",
 			endpoint: &Endpoint{
-				Path:         "/",
-				Method:       "GET",
-				CallbackName: "HelloThere",
-				Callback:     nil,
+				Path:        "/",
+				Method:      "GET",
+				HandlerName: "HelloThere",
+				Handler:     nil,
 			},
 			want: &Endpoint{
-				Path:         "/",
-				Method:       "GET",
-				CallbackName: "HelloThere",
-				Callback:     nil,
+				Path:        "/",
+				Method:      "GET",
+				HandlerName: "HelloThere",
+				Handler:     nil,
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			tt.endpoint.Callback = callbacks.Callbacks[tt.endpoint.CallbackName]
+			tt.endpoint.Handler = handlers.Handlers[tt.endpoint.HandlerName]
 			got := tt.endpoint
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("got %v, want %v", got, tt.want)
