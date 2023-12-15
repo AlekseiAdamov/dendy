@@ -17,7 +17,7 @@
       handlerName: Auth
     ```
 
-2. Implement endpoints handler functions in the `handlers` package and put them in the `Handlers` map.
+2. Implement endpoints handler functions and put them in the `map[string]http.HandlerFunc`.
    Unfortunately, Go doesn't allow to call package functions by their names without binding them somehow &mdash; be it a map or a type method. That's the reason for the requirement.
 
     ```go
@@ -40,19 +40,23 @@
     }
     ```
 
-3. Run server:
+3. Run server, passing previously created `map[string]http.HandlerFunc` as an argument.
 
     ```go
     package main
 
-    import "github.com/alekseiadamov/dendy"
+    import (
+        "github.com/alekseiadamov/dendy"
+
+        "github.com/username/projectname/handlers"
+    )
 
     func main() {
-        dendy.Serve("localhost:3333", "./example.yaml")
+        dendy.Serve("localhost:3333", "./example.yaml", handlers.Handlers)
     }
     ```
 
-4. Check response:
+4. Check response.
 
     ```http
     GET http://localhost:3333

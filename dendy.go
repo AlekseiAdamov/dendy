@@ -11,7 +11,7 @@ import "github.com/alekseiadamov/dendy/endpoints"
 //
 //	import (
 //		"github.com/alekseiadamov/dendy"
-//		"github.com/alekseiadamov/dendy/endpoints"
+//
 //		"github.com/username/projectname/handlers"
 //	)
 //
