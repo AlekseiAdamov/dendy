@@ -11,6 +11,8 @@ import (
 	"golang.org/x/text/language"
 )
 
+const defaultAddress = "localhost:3333"
+
 type Router struct {
 	*chi.Mux
 }
@@ -32,5 +34,8 @@ func (router Router) CreateEndpoints(endpoints endpoints.Endpoints) {
 }
 
 func (router Router) Serve(address string) error {
+	if len(strings.TrimSpace(address)) == 0 {
+		address = defaultAddress
+	}
 	return http.ListenAndServe(address, router)
 }
