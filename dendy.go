@@ -12,9 +12,9 @@ import "github.com/alekseiadamov/dendy/endpoints"
 //	import "github.com/alekseiadamov/dendy"
 //
 //	func main() {
-//		dendy.Serve("./example.yaml", "localhost:3333")
+//		dendy.Serve("localhost:3333", "./example.yaml")
 //	}
-func Serve(configPath string, address string) {
+func Serve(address string, configPath string) {
 	router := NewRouter()
 	endpoints := endpoints.Read(configPath)
 

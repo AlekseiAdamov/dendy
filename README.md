@@ -48,7 +48,7 @@
     import "github.com/alekseiadamov/dendy"
 
     func main() {
-        dendy.Serve("./example.yaml", "localhost:3333")
+        dendy.Serve("localhost:3333", "./example.yaml")
     }
     ```
 
