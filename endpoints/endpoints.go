@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/alekseiadamov/dendy/handlers"
 	"gopkg.in/yaml.v3"
 )
 
@@ -17,14 +16,15 @@ type Endpoint struct {
 }
 
 type Endpoints map[string]*Endpoint
+type Handlers map[string]http.HandlerFunc
 
-func (endpoints Endpoints) setHandlers() {
+func (endpoints Endpoints) setHandlers(handlers Handlers) {
 	for _, endpoint := range endpoints {
-		endpoint.Handler = handlers.Handlers[endpoint.HandlerName]
+		endpoint.Handler = handlers[endpoint.HandlerName]
 	}
 }
 
-func Read(configPath string) Endpoints {
+func Read(configPath string, handlers Handlers) Endpoints {
 	endpointConfig, fileReadingError := os.ReadFile(configPath)
 
 	if fileReadingError != nil {
@@ -32,7 +32,7 @@ func Read(configPath string) Endpoints {
 	}
 
 	endpoints := unmarshal(endpointConfig)
-	endpoints.setHandlers()
+	endpoints.setHandlers(handlers)
 	return endpoints
 }
 
